@@ -11,7 +11,7 @@
 ## 1. 下载项目
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/orionxer/esp_ble_websocket
 cd ble_websocket
 ```
 
@@ -21,6 +21,7 @@ cd ble_websocket
 
 本工程基于：
 
+- 在线服务端 [ws.gogo.uno](https://ws.gogo.uno)
 - ESP-IDF `v5.5.3`
 - 目标芯片：`ESP32-C5`
 
