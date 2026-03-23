@@ -12,6 +12,8 @@
 
 ```bash
 git clone https://github.com/orionxer/esp_ble_websocket
+```
+```sh
 cd ble_websocket
 ```
 
