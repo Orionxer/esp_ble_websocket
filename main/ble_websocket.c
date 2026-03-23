@@ -8,6 +8,7 @@
 #include "esp_timer.h"
 #include "esp_wifi.h"
 #include "esp_websocket_client.h"
+#include "ble_app.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
 #include "freertos/task.h"
@@ -500,11 +501,7 @@ void app_main(void)
         ESP_LOGE(TAG, "Video is missing");
     }
 
-    ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        ret = nvs_flash_init();
-    }
+    ret = ble_websocket_nvs_init();
     ESP_ERROR_CHECK(ret);
 
     wifi_init_sta();
@@ -514,6 +511,7 @@ void app_main(void)
     }
 
     websocket_start();
+    ble_app_start();
 
     while (true) {
         vTaskDelay(pdMS_TO_TICKS(1000));
