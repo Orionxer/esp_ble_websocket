@@ -30,6 +30,7 @@
 static const char *TAG = "Main";
 
 static EventGroupHandle_t s_wifi_event_group;
+static esp_websocket_client_handle_t s_websocket_client;
 static int s_wifi_retry_num;
 static bool s_use_ssl;
 static bool s_upload_in_progress;
@@ -124,6 +125,23 @@ static bool send_text_command(esp_websocket_client_handle_t client, const char *
 
     ESP_LOGI(TAG, "Sent text command: %s", command);
     return true;
+}
+
+bool websocket_send_text_message(const char *message)
+{
+    if (s_websocket_client == NULL) {
+        ESP_LOGW(TAG, "WebSocket client is not initialized, skip text message: %s",
+                 message != NULL ? message : "(null)");
+        return false;
+    }
+
+    if (!esp_websocket_client_is_connected(s_websocket_client)) {
+        ESP_LOGW(TAG, "WebSocket is not connected, skip text message: %s",
+                 message != NULL ? message : "(null)");
+        return false;
+    }
+
+    return send_text_command(s_websocket_client, message);
 }
 
 static void video_upload_task(void *pv_parameter)
@@ -470,6 +488,8 @@ static void websocket_start(void)
         ESP_LOGE(TAG, "Failed to initialize WebSocket client");
         return;
     }
+
+    s_websocket_client = client;
 
     ESP_ERROR_CHECK(esp_websocket_register_events(client,
                                                   WEBSOCKET_EVENT_ANY,

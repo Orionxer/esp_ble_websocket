@@ -3,6 +3,7 @@
 #include "common.h"
 #include "heart_rate.h"
 #include "led.h"
+#include "websocket_bridge.h"
 
 static int heart_rate_chr_access(uint16_t conn_handle, uint16_t attr_handle,
                                  struct ble_gatt_access_ctxt *ctxt, void *arg);
@@ -104,9 +105,11 @@ static int led_chr_access(uint16_t conn_handle, uint16_t attr_handle,
             if (ctxt->om->om_data[0]) {
                 led_on();
                 ESP_LOGI(TAG, "led turned on!");
+                websocket_send_text_message("led turned on!");
             } else {
                 led_off();
                 ESP_LOGI(TAG, "led turned off!");
+                websocket_send_text_message("led turned off!");
             }
             return 0;
         }
