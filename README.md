@@ -33,6 +33,12 @@ cd ble_websocket
 source ~/.espressif/tools/activate_idf_v5.5.3.sh
 ```
 
+设置目标芯片：
+
+```bash
+idf.py set-target esp32c5
+```
+
 ## 3. 配置项目
 
 当前默认配置位于 `sdkconfig`，主要包括：
@@ -72,6 +78,10 @@ idf.py -b 6000000 flash
 idf.py monitor
 ```
 
+一键编译烧录监控
+```sh
+idf.py -b 6000000 build flash && idf.py monitor
+```
 ## 5. 运行说明
 
 设备启动后会：
