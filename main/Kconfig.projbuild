@@ -32,7 +32,7 @@ menu "BLE Configuration"
 
     choice BLINK_LED
         prompt "Blink LED type"
-        default BLINK_LED_GPIO
+        default BLINK_LED_STRIP
         help
             Select the LED type. A normal level controlled LED or an addressable LED strip.
 
@@ -47,7 +47,7 @@ menu "BLE Configuration"
         depends on BLINK_LED_STRIP
         prompt "LED strip backend peripheral"
         default BLINK_LED_STRIP_BACKEND_RMT if SOC_RMT_SUPPORTED
-        default BLINK_LED_STRIP_BACKEND_SPI
+        default BLINK_LED_STRIP_BACKEND_RMT
         help
             Select the backend peripheral to drive the LED strip.
 
